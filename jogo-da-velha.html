@@ -7,12 +7,25 @@
 <body>
     <main>
         <table>
-            <tbody id="copoTabela">
+            <tbody id="corpoTabela">
             </tbody>
         </table>
     </main>
     <script>
-        
+        var corpoT = document.getElementById("corpoTabela");
+        for (var index = 0; index < 3; index++)
+        {
+            var linha = document.createElement("tr");
+            for (var index2 = 0; index2 < 3; index2++)
+            {
+                var dado = document.createElement("td");
+                dado.style.border = "1px solid black";
+                dado.style.width = "30px";
+                dado.style.height = "30px";
+                linha.appendChild(dado);
+            }
+            corpoT.appendChild(linha);
+        }
     </script>
 </body>
 </html>

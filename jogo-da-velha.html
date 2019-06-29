@@ -80,28 +80,37 @@
             var linhaAtual = ((parseInt(ultimoDado.id)) - colunaAtual)/10;
             colunaAtual--;
             linhaAtual--;
-            console.log(ultimoDado.id);
-            console.log(linhaAtual);
-            console.log(colunaAtual);
 
             var linhaCorrent = corpoT.children[linhaAtual];
             
             if(dadosIguais(linhaCorrent.children[0].innerText, linhaCorrent.children[1].innerText, linhaCorrent.children[2].innerText))
             {
+                linhaCorrent.children[0].style.backgroundColor = "green";
+                linhaCorrent.children[1].style.backgroundColor = "green";
+                linhaCorrent.children[2].style.backgroundColor = "green";
                 return true;
             }
             else if(dadosIguais(corpoT.children[0].children[colunaAtual].innerText, corpoT.children[1].children[colunaAtual].innerText, corpoT.children[2].children[colunaAtual].innerText))
             {
+                corpoT.children[0].children[colunaAtual].style.backgroundColor = "green";
+                corpoT.children[1].children[colunaAtual].style.backgroundColor = "green";
+                corpoT.children[2].children[colunaAtual].style.backgroundColor = "green";
                 return true;
             }
             else if(linhaAtual == colunaAtual || (parseInt(linhaAtual)!=1 && parseInt(colunaAtual)!=1) )
             {
                 if(dadosIguais(corpoT.children[0].children[0].innerText, corpoT.children[1].children[1].innerText, corpoT.children[2].children[2].innerText))
                 {
+                    corpoT.children[0].children[0].style.backgroundColor = "green";
+                    corpoT.children[1].children[1].style.backgroundColor = "green";
+                    corpoT.children[2].children[2].style.backgroundColor = "green";
                     return true;
                 }
                 else if(dadosIguais(corpoT.children[0].children[2].innerText, corpoT.children[1].children[1].innerText, corpoT.children[2].children[0].innerText))
                 {
+                    corpoT.children[0].children[2].style.backgroundColor = "green";
+                    corpoT.children[1].children[1].style.backgroundColor = "green";
+                    corpoT.children[2].children[0].style.backgroundColor = "green";
                     return true;
                 }
                 else

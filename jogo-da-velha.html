@@ -31,17 +31,21 @@
         }
         function xizOuBola(e)
         {
-            if(jogadorVez%2==0)
+            var atual = e.srcElement;
+            if(atual.innerText=="")
             {
-                console.log(e);
-                e.srcElement.innerText = "X";
+                if(jogadorVez%2==0)
+                {
+                    console.log(e);
+                    e.srcElement.innerText = "X";
+                }
+                else
+                {
+                    e.srcElement.innerText = "O";
+                }
+                jogadorVez++;
+                condicaoVitoria(e.srcElement);
             }
-            else
-            {
-                e.srcElement.innerText = "O";
-            }
-            jogadorVez++;
-            condicaoVitoria(e.srcElement);
         }
         function condicaoVitoria(ultimoDado)
         {
@@ -55,6 +59,13 @@
         function limpaTabela()
         {
             jogadorVez=0;
+            for (var index = 0; index < 3; index++)
+            {
+                for (var index2 = 0; index2 < 3; index2++)
+                {
+
+                }
+            }
         }
     </script>
 </body>

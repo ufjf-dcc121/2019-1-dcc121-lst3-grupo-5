@@ -41,6 +41,20 @@
                 e.srcElement.innerText = "O";
             }
             jogadorVez++;
+            condicaoVitoria(e.srcElement);
+        }
+        function condicaoVitoria(ultimoDado)
+        {
+            var mensagemResultado = document.createElement("div");
+            if(jogadorVez==9)
+            {
+                mensagemResultado.innerText = "Empataram";
+            }
+            document.getElementsByTagName("main")[0].appendChild(mensagemResultado);
+        }
+        function limpaTabela()
+        {
+            jogadorVez=0;
         }
     </script>
 </body>

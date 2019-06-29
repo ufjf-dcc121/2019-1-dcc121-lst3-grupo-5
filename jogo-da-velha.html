@@ -13,6 +13,7 @@
     </main>
     <script>
         var corpoT = document.getElementById("corpoTabela");
+        var jogadorVez = 0;
         for (var index = 0; index < 3; index++)
         {
             var linha = document.createElement("tr");
@@ -22,9 +23,24 @@
                 dado.style.border = "1px solid black";
                 dado.style.width = "30px";
                 dado.style.height = "30px";
+                dado.style.textAlign = "center";
+                dado.addEventListener("click",xizOuBola);
                 linha.appendChild(dado);
             }
             corpoT.appendChild(linha);
+        }
+        function xizOuBola(e)
+        {
+            if(jogadorVez%2==0)
+            {
+                console.log(e);
+                e.srcElement.innerText = "X";
+            }
+            else
+            {
+                e.srcElement.innerText = "O";
+            }
+            jogadorVez++;
         }
     </script>
 </body>

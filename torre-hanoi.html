@@ -5,17 +5,25 @@
     <title>Torre de Hanoi</title>
 </head>
 <body>
-    <ul id = "torre1"></ul>
-    <ul id = "torre2"></ul>
-    <ul id = "torre3"></ul>
-    <button id="botaoResetar">resetar</button>
+    <div>
+        <ul id = "torre1"></ul>
+        <ul id = "torre2"></ul>
+        <ul id = "torre3"></ul>
+    </div>
+    <div>
+        <p> Quantidade de Movimentos: <span id="qtdMovimentos">0</span></p>
+        <button id="botaoResetar">resetar</button>
+    </div>
+
     <script>
 
         var ulTorre1 = document.getElementById("torre1");
         var ulTorre2 = document.getElementById("torre2");
         var ulTorre3 = document.getElementById("torre3");
         var btnResetar = document.getElementById("botaoResetar");
+        var spnMovimentos = document.getElementById("qtdMovimentos");
         var discoAtual;
+        var venceu = 0;
         var movimentos = 0;
 
         for (var index = 0; index < 5; index++) {
@@ -36,22 +44,30 @@
         ulTorre2.style.borderBottom = "10px solid black";
         ulTorre3.style.borderBottom = "10px solid black";
 
+        ulTorre1.style.marginBottom = "2px";
+        ulTorre2.style.marginBottom = "2px";
+        ulTorre3.style.marginBottom = "2px";
+
         ulTorre1.style.display = "inline-block";
         ulTorre2.style.display = "inline-block";
         ulTorre3.style.display = "inline-block";
-        btnResetar.style.display = "block";
 
         ulTorre1.style.width = "48px";
         ulTorre2.style.width = "48px";
         ulTorre3.style.width = "48px";
 
-        ulTorre1.style.verticalAlign = "bottom";
-        ulTorre2.style.verticalAlign = "bottom";
-        ulTorre3.style.verticalAlign = "bottom";
+        document.getElementsByTagName("div")[0].style.height = "120px";
+
+        ulTorre1.style.verticalAlign = "text-bottom";
+        ulTorre2.style.verticalAlign = "text-bottom";
+        ulTorre3.style.verticalAlign = "text-bottom";
+
         function resetarJogo()
         {
             discoAtual = null;
             movimentos = 0;
+            venceu =0;
+            spnMovimentos.innerText = movimentos;
             ulTorre1.innerHTML="";
             ulTorre2.innerHTML="";
             ulTorre3.innerHTML="";
@@ -78,7 +94,7 @@
         function moverDisco(e)
         {
             var lista = e.srcElement;
-            if(discoAtual.parentElement != lista &&  lista.nodeName!="LI")
+            if(discoAtual.parentElement != lista &&  lista.nodeName!="LI" && venceu!=1)
             {
                 if(lista.childNodes[0]==null)
                 {
@@ -90,6 +106,15 @@
                     movimentos++;
                     lista.insertBefore(discoAtual, lista.childNodes[0]);
                 }
+                spnMovimentos.innerText = movimentos;
+            }
+            condicaoVenceu();
+        }
+        function condicaoVenceu()
+        {
+            if(ulTorre3.childNodes.length==5)
+            {
+                venceu = 1;
             }
         }
 

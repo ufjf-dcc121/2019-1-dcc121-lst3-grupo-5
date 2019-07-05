@@ -215,22 +215,68 @@
         }
         function finalizaJogo()
         {
-            finalizar();
+            if(indexLinhaAtual >0)
+            {
+                finalizar(indexLinhaAtual,indexColunaAtual);
+            }
         }
-        function finalizar()
+        function finalizar(indiceLinhaAtual, incideColunaAtual)
         {
-            //colore background em verde para o próximo movimento
+            //acessa os quadrados da próxima jogada e escolhe o menos acessível
             var corpoTabela = document.getElementById("corpTabuleiro");
             var modificadorCoord1 = 1;
             for (var index = 0; index < 2; index++)
             {
                 var modificadorCoord2 = 1;
                 for (var index2 = 0; index2 < 2; index2++) {
-                    var novoIndexLinha1 = indexLinhaAtual + (2*modificadorCoord1);
-                    var novoIndexColuna1 = indexColunaAtual + (1*modificadorCoord2);
+                    var novoIndexLinha1 = indiceLinhaAtual + (2*modificadorCoord1);
+                    var novoIndexColuna1 = incideColunaAtual + (1*modificadorCoord2);
 
-                    var novoIndexLinha2 = indexLinhaAtual + (1*modificadorCoord2);
-                    var novoIndexColuna2 = indexColunaAtual + (2*modificadorCoord1);
+                    var novoIndexLinha2 = indiceLinhaAtual + (1*modificadorCoord2);
+                    var novoIndexColuna2 = incideColunaAtual + (2*modificadorCoord1);
+
+                    if((novoIndexLinha1 >= 0) && (novoIndexLinha1 < 8))
+                    {
+                        if((novoIndexColuna1 > 0 ) && (novoIndexColuna1 <= 8))
+                        {
+                            var proxQuadrado = corpoTabela.children[novoIndexLinha1].children[novoIndexColuna1];
+                            if(proxQuadrado.style.backgroundColor == "green")
+                            {
+                                acessibilidade(novoIndexLinha1,novoIndexColuna1);
+                            }
+                        }
+                    }
+                    if((novoIndexColuna2 > 0) && (novoIndexColuna2 <= 8))
+                    {
+                        if((novoIndexLinha2 >= 0) && (novoIndexLinha2 < 8))
+                        {
+                            var proxQuadrado = corpoTabela.children[novoIndexLinha2].children[novoIndexColuna2];
+                            if(proxQuadrado.style.backgroundColor == "green")
+                            {
+                                acessibilidade(novoIndexLinha2,novoIndexColuna2);
+                            }
+                        }
+                    }
+                    modificadorCoord2= modificadorCoord2 * (-1);
+                }
+                modificadorCoord1= modificadorCoord1 * (-1);
+            }
+        }
+        function acessibilidade(indiceLinhaAtual, incideColunaAtual)
+        {
+            //Conta e retorna de quantos quadrados é possível acessar o quadrado atual
+            var corpoTabela = document.getElementById("corpTabuleiro");
+            var modificadorCoord1 = 1;
+            var acessiveis =0;
+            for (var index = 0; index < 2; index++)
+            {
+                var modificadorCoord2 = 1;
+                for (var index2 = 0; index2 < 2; index2++) {
+                    var novoIndexLinha1 = indiceLinhaAtual + (2*modificadorCoord1);
+                    var novoIndexColuna1 = incideColunaAtual + (1*modificadorCoord2);
+
+                    var novoIndexLinha2 = indiceLinhaAtual + (1*modificadorCoord2);
+                    var novoIndexColuna2 = incideColunaAtual + (2*modificadorCoord1);
 
                     if((novoIndexLinha1 >= 0) && (novoIndexLinha1 < 8))
                     {
@@ -239,7 +285,7 @@
                             var proxQuadrado = corpoTabela.children[novoIndexLinha1].children[novoIndexColuna1];
                             if(proxQuadrado.innerHTML=="")
                             {
-                                proxQuadrado.style.backgroundColor ="green"
+                                acessiveis++;
                             }
                         }
                     }
@@ -250,7 +296,7 @@
                             var proxQuadrado = corpoTabela.children[novoIndexLinha2].children[novoIndexColuna2];
                             if(proxQuadrado.innerHTML=="")
                             {
-                                proxQuadrado.style.backgroundColor ="green"
+                                acessiveis++;
                             }
                         }
                     }
@@ -258,6 +304,7 @@
                 }
                 modificadorCoord1= modificadorCoord1 * (-1);
             }
+            return acessiveis;
         }
     </script>
 </body>

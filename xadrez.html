@@ -49,22 +49,22 @@
         var novaLinhaIndice = document.createElement("tr");
         var novoIndiceTopo = document.createElement("th");
         novaLinhaIndice.appendChild(novoIndiceTopo);
-        for (var index = 0; index < 8; index++) {
+        for (var indice = 0; indice < 8; indice++) {
             
             var novaLinha = document.createElement("tr");
             var novoIndicelado = document.createElement("th");
-            novoIndicelado.innerText = index + 1;
+            novoIndicelado.innerText = indice + 1;
             novaLinha.appendChild(novoIndicelado);
 
             var novoIndiceTopo = document.createElement("th");
-            novoIndiceTopo.innerText = String.fromCharCode(65+index);
+            novoIndiceTopo.innerText = String.fromCharCode(65+indice);
             novaLinhaIndice.appendChild(novoIndiceTopo);
 
-            for (var index2 = 0; index2 < 8; index2++) {
+            for (var indice2 = 0; indice2 < 8; indice2++) {
                 var novoDado = document.createElement("td");
                 novoDado.classList = "quadradoTab";
                 
-                if((index+index2)%2==0)
+                if((indice+indice2)%2==0)
                 {
                     novoDado.classList = novoDado.classList + " quadradoPar";
                 }
@@ -85,6 +85,12 @@
         function inicioJogo(event)
         {
             var quadradoAtual = event.srcElement;
+
+            var indexColuna = quadradoAtual.cellIndex;
+            var indexLinha = quadradoAtual.parentElement.sectionRowIndex;
+
+            var corpoTabela = quadradoAtual.parentElement.parentElement;
+
             if(inicio==0)
             {
                 quadradoAtual.appendChild(cavalo);
@@ -93,12 +99,14 @@
             else
             {
                 var quadradoAnterior = cavalo.parentElement;
-
-                var fechado = document.createElement("img");
+                if(quadradoAtual.style.backgroundColor == "green")
+                {
+                    var fechado = document.createElement("img");
                     fechado.src = "fechado.png";
                     fechado.classList = "quadradoInterno";
                     quadradoAnterior.appendChild(fechado);
                     quadradoAtual.appendChild(cavalo);
+                }
                 
             }
         }

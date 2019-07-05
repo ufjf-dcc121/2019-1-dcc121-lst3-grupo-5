@@ -13,8 +13,8 @@
     }
     .quadradoInterno
     {
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
     }
     .quadradoPar
     {
@@ -103,20 +103,23 @@
 
             if(movimento==0)
             {
+                movimento++;
+                quadradoAtual.innerText = movimento;
                 quadradoAtual.appendChild(cavalo);
                 coloreVerde(indexColunaAtual,indexLinhaAtual);
-                movimento++;
             }
             else
             {
                 var quadradoAnterior = cavalo.parentElement;
                 if(quadradoAtual.style.backgroundColor == "green")
                 {
+                    movimento++;
                     resetaCor();
                     var fechado = document.createElement("img");
                     fechado.src = "fechado.png";
                     fechado.classList = "quadradoInterno";
                     quadradoAnterior.appendChild(fechado);
+                    quadradoAtual.innerText = movimento;
                     quadradoAtual.appendChild(cavalo);
                     coloreVerde(indexColunaAtual,indexLinhaAtual);
                 }

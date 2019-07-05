@@ -7,8 +7,14 @@
     .quadradoTab
     {
         border: 1px solid black;
-        height: 50px;
-        width: 50px;
+        height: 48px;
+        width: 48px;
+        text-align: center;
+    }
+    .quadradoInterno
+    {
+        height: 40px;
+        width: 40px;
     }
     .quadradoPar
     {
@@ -30,10 +36,21 @@
     <script>
         var indicesTab = document.getElementById("indTabuleiro");
         var corpoTab = document.getElementById("corpTabuleiro");
+        var cavalo = document.createElement("img");
+        var fechado = document.createElement("img");
+
+        cavalo.src = "cavalo.png";
+        cavalo.classList = "quadradoInterno";
+        fechado.src = "fechado.jpg";
+        fechado.classList = "quadradoInterno";
+
+        // ----------------------------------------------------------------
+        // criando corpo do tabuleiro
+        // ----------------------------------------------------------------
+
         var novaLinhaIndice = document.createElement("tr");
         var novoIndiceTopo = document.createElement("th");
         novaLinhaIndice.appendChild(novoIndiceTopo);
-
         for (var index = 0; index < 8; index++) {
             
             var novaLinha = document.createElement("tr");
@@ -58,12 +75,19 @@
                     novoDado.classList = novoDado.classList + " quadradoImpar";
                 }
                 
+                novoDado.addEventListener("click",inicioJogo);
                 novaLinha.appendChild(novoDado);
             }
             corpoTab.appendChild(novaLinha);
         }
-
         indicesTab.appendChild(novaLinhaIndice);
+        // ----------------------------------------------------------------
+        // funções
+        // ----------------------------------------------------------------
+        function inicioJogo(event)
+        {
+            event.srcElement.appendChild(cavalo);
+        }
     </script>
 </body>
 </html>

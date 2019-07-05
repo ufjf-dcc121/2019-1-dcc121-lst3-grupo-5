@@ -73,7 +73,7 @@
                     novoDado.classList = novoDado.classList + " quadradoImpar";
                 }
                 
-                novoDado.addEventListener("click",inicioJogo);
+                novoDado.addEventListener("click",movimentoJogo);
                 novaLinha.appendChild(novoDado);
             }
             corpoTab.appendChild(novaLinha);
@@ -82,18 +82,17 @@
         // ----------------------------------------------------------------
         // funções
         // ----------------------------------------------------------------
-        function inicioJogo(event)
+        function movimentoJogo(event)
         {
             var quadradoAtual = event.srcElement;
 
-            var indexColuna = quadradoAtual.cellIndex;
-            var indexLinha = quadradoAtual.parentElement.sectionRowIndex;
-
-            var corpoTabela = quadradoAtual.parentElement.parentElement;
+            var indexColunaAtual = quadradoAtual.cellIndex;
+            var indexLinhaAtual = quadradoAtual.parentElement.sectionRowIndex;
 
             if(inicio==0)
             {
                 quadradoAtual.appendChild(cavalo);
+                coloreVerde(indexColunaAtual,indexLinhaAtual);
                 inicio++;
             }
             else
@@ -101,13 +100,76 @@
                 var quadradoAnterior = cavalo.parentElement;
                 if(quadradoAtual.style.backgroundColor == "green")
                 {
+                    resetaCor();
                     var fechado = document.createElement("img");
                     fechado.src = "fechado.png";
                     fechado.classList = "quadradoInterno";
                     quadradoAnterior.appendChild(fechado);
                     quadradoAtual.appendChild(cavalo);
+                    coloreVerde(indexColunaAtual,indexLinhaAtual);
                 }
                 
+            }
+        }
+        function coloreVerde(indexColunaAtual,indexLinhaAtual)
+        {
+            //colore background em verde para o próximo movimento
+            var corpoTabela = document.getElementById("corpTabuleiro");
+            var modificadorCoord1 = 1;
+            for (var index = 0; index < 2; index++)
+            {
+                var modificadorCoord2 = 1;
+                for (var index2 = 0; index2 < 2; index2++) {
+                    var novoIndexLinha1 = indexLinhaAtual + (2*modificadorCoord1);
+                    var novoIndexColuna1 = indexColunaAtual + (1*modificadorCoord2);
+
+                    var novoIndexLinha2 = indexLinhaAtual + (1*modificadorCoord2);
+                    var novoIndexColuna2 = indexColunaAtual + (2*modificadorCoord1);
+
+                    if((novoIndexLinha1 >= 0) && (novoIndexLinha1 < 8))
+                    {
+                        if((novoIndexColuna1 > 0 ) && (novoIndexColuna1 <= 8))
+                        {
+                            var proxQuadrado = corpoTabela.children[novoIndexLinha1].children[novoIndexColuna1];
+                            if(proxQuadrado.innerHTML=="")
+                            {
+                                proxQuadrado.style.backgroundColor ="green"
+                            }
+                        }
+                    }
+                    if((novoIndexColuna2 > 0) && (novoIndexColuna2 <= 8))
+                    {
+                        if((novoIndexLinha2 >= 0) && (novoIndexLinha2 < 8))
+                        {
+                            var proxQuadrado = corpoTabela.children[novoIndexLinha2].children[novoIndexColuna2];
+                            if(proxQuadrado.innerHTML=="")
+                            {
+                                proxQuadrado.style.backgroundColor ="green"
+                            }
+                        }
+                    }
+                    modificadorCoord2= modificadorCoord2 * (-1);
+                }
+                modificadorCoord1= modificadorCoord1 * (-1);
+            }
+        }
+        function resetaCor()
+        {
+            var corpoTabela = document.getElementById("corpTabuleiro");
+            //reseta a cor do backgroud
+            for (var indice = 0; indice < 8; indice++) {
+
+                for (var indice2 = 1; indice2 < 9; indice2++) {
+
+                    if((indice+indice2)%2==0)
+                    {
+                        corpoTabela.children[indice].children[indice2].style.backgroundColor ="antiquewhite";
+                    }
+                    else
+                    {
+                        corpoTabela.children[indice].children[indice2].style.backgroundColor ="burlywood";
+                    }
+                }
             }
         }
     </script>

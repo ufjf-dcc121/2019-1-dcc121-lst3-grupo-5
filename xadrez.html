@@ -3,8 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Passeio do Cavalo</title>
+    <style>
+    .quadradoTab
+    {
+        border: 1px solid black;
+        height: 50px;
+        width: 50px;
+    }
+    .quadradoPar
+    {
+        background-color: burlywood;
+    }
+    .quadradoImpar
+    {
+        background-color: antiquewhite;
+    }
+    </style>
 </head>
 <body>
-    
+    <table>
+        <thead id="indTabuleiro">
+        </thead>
+        <tbody id="corpTabuleiro">
+        </tbody>
+    </table>
+    <script>
+        var indicesTab = document.getElementById("indTabuleiro");
+        var corpoTab = document.getElementById("corpTabuleiro");
+        var novaLinhaIndice = document.createElement("tr");
+        var novoIndiceTopo = document.createElement("th");
+        novaLinhaIndice.appendChild(novoIndiceTopo);
+
+        for (var index = 0; index < 8; index++) {
+            
+            var novaLinha = document.createElement("tr");
+            var novoIndicelado = document.createElement("th");
+            novoIndicelado.innerText = index + 1;
+            novaLinha.appendChild(novoIndicelado);
+
+            var novoIndiceTopo = document.createElement("th");
+            novoIndiceTopo.innerText = String.fromCharCode(65+index);
+            novaLinhaIndice.appendChild(novoIndiceTopo);
+
+            for (var index2 = 0; index2 < 8; index2++) {
+                var novoDado = document.createElement("td");
+                novoDado.classList = "quadradoTab";
+                
+                if((index+index2)%2==0)
+                {
+                    novoDado.classList = novoDado.classList + " quadradoPar";
+                }
+                else
+                {
+                    novoDado.classList = novoDado.classList + " quadradoImpar";
+                }
+                
+                novaLinha.appendChild(novoDado);
+            }
+            corpoTab.appendChild(novaLinha);
+        }
+
+        indicesTab.appendChild(novaLinhaIndice);
+    </script>
 </body>
 </html>

@@ -37,12 +37,10 @@
         var indicesTab = document.getElementById("indTabuleiro");
         var corpoTab = document.getElementById("corpTabuleiro");
         var cavalo = document.createElement("img");
-        var fechado = document.createElement("img");
+        var inicio = 0;
 
         cavalo.src = "cavalo.png";
         cavalo.classList = "quadradoInterno";
-        fechado.src = "fechado.jpg";
-        fechado.classList = "quadradoInterno";
 
         // ----------------------------------------------------------------
         // criando corpo do tabuleiro
@@ -86,7 +84,23 @@
         // ----------------------------------------------------------------
         function inicioJogo(event)
         {
-            event.srcElement.appendChild(cavalo);
+            var quadradoAtual = event.srcElement;
+            if(inicio==0)
+            {
+                quadradoAtual.appendChild(cavalo);
+                inicio++;
+            }
+            else
+            {
+                var quadradoAnterior = cavalo.parentElement;
+
+                var fechado = document.createElement("img");
+                    fechado.src = "fechado.png";
+                    fechado.classList = "quadradoInterno";
+                    quadradoAnterior.appendChild(fechado);
+                    quadradoAtual.appendChild(cavalo);
+                
+            }
         }
     </script>
 </body>

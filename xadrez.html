@@ -38,13 +38,17 @@
         <button id="reseta">Resetar</button>
     </div>
     <script>
+
+        // ----------------------------------------------------------------
+        // declarações de variáveis
+        // ----------------------------------------------------------------
         var indicesTab = document.getElementById("indTabuleiro");
         var corpoTab = document.getElementById("corpTabuleiro");
         var btnFinalizar = document.getElementById("finaliza");
         var btnResetar = document.getElementById("reseta");
         var cavalo = document.createElement("img");
         var movimento = 0;
-
+        var indexColunaAtual = -1, indexLinhaAtual = -1;
         cavalo.src = "cavalo.png";
         cavalo.classList = "quadradoInterno";
 
@@ -98,15 +102,15 @@
         {
             var quadradoAtual = event.srcElement;
 
-            var indexColunaAtual = quadradoAtual.cellIndex;
-            var indexLinhaAtual = quadradoAtual.parentElement.sectionRowIndex;
+            indexColunaAtual = quadradoAtual.cellIndex;
+            indexLinhaAtual = quadradoAtual.parentElement.sectionRowIndex;
 
             if(movimento==0)
             {
                 movimento++;
                 quadradoAtual.innerText = movimento;
                 quadradoAtual.appendChild(cavalo);
-                coloreVerde(indexColunaAtual,indexLinhaAtual);
+                coloreVerde();
             }
             else
             {
@@ -121,12 +125,12 @@
                     quadradoAnterior.appendChild(fechado);
                     quadradoAtual.innerText = movimento;
                     quadradoAtual.appendChild(cavalo);
-                    coloreVerde(indexColunaAtual,indexLinhaAtual);
+                    coloreVerde();
                 }
                 
             }
         }
-        function coloreVerde(indexColunaAtual,indexLinhaAtual)
+        function coloreVerde()
         {
             //colore background em verde para o próximo movimento
             var corpoTabela = document.getElementById("corpTabuleiro");
@@ -187,10 +191,6 @@
                 }
             }
         }
-        function finalizaJogo()
-        {
-
-        }
         function resetaJogo()
         {
             var corpoTabela = document.getElementById("corpTabuleiro");
@@ -211,6 +211,52 @@
                         corpoTabela.children[indice].children[indice2].innerHTML = "";
                     }
                 }
+            }
+        }
+        function finalizaJogo()
+        {
+            finalizar();
+        }
+        function finalizar()
+        {
+            //colore background em verde para o próximo movimento
+            var corpoTabela = document.getElementById("corpTabuleiro");
+            var modificadorCoord1 = 1;
+            for (var index = 0; index < 2; index++)
+            {
+                var modificadorCoord2 = 1;
+                for (var index2 = 0; index2 < 2; index2++) {
+                    var novoIndexLinha1 = indexLinhaAtual + (2*modificadorCoord1);
+                    var novoIndexColuna1 = indexColunaAtual + (1*modificadorCoord2);
+
+                    var novoIndexLinha2 = indexLinhaAtual + (1*modificadorCoord2);
+                    var novoIndexColuna2 = indexColunaAtual + (2*modificadorCoord1);
+
+                    if((novoIndexLinha1 >= 0) && (novoIndexLinha1 < 8))
+                    {
+                        if((novoIndexColuna1 > 0 ) && (novoIndexColuna1 <= 8))
+                        {
+                            var proxQuadrado = corpoTabela.children[novoIndexLinha1].children[novoIndexColuna1];
+                            if(proxQuadrado.innerHTML=="")
+                            {
+                                proxQuadrado.style.backgroundColor ="green"
+                            }
+                        }
+                    }
+                    if((novoIndexColuna2 > 0) && (novoIndexColuna2 <= 8))
+                    {
+                        if((novoIndexLinha2 >= 0) && (novoIndexLinha2 < 8))
+                        {
+                            var proxQuadrado = corpoTabela.children[novoIndexLinha2].children[novoIndexColuna2];
+                            if(proxQuadrado.innerHTML=="")
+                            {
+                                proxQuadrado.style.backgroundColor ="green"
+                            }
+                        }
+                    }
+                    modificadorCoord2= modificadorCoord2 * (-1);
+                }
+                modificadorCoord1= modificadorCoord1 * (-1);
             }
         }
     </script>

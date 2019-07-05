@@ -33,11 +33,17 @@
         <tbody id="corpTabuleiro">
         </tbody>
     </table>
+    <div>
+        <button id="finaliza">Finalizar Jogo</button>
+        <button id="reseta">Resetar</button>
+    </div>
     <script>
         var indicesTab = document.getElementById("indTabuleiro");
         var corpoTab = document.getElementById("corpTabuleiro");
+        var btnFinalizar = document.getElementById("finaliza");
+        var btnResetar = document.getElementById("reseta");
         var cavalo = document.createElement("img");
-        var inicio = 0;
+        var movimento = 0;
 
         cavalo.src = "cavalo.png";
         cavalo.classList = "quadradoInterno";
@@ -47,8 +53,9 @@
         // ----------------------------------------------------------------
 
         var novaLinhaIndice = document.createElement("tr");
-        var novoIndiceTopo = document.createElement("th");
+        var novoIndiceTopo = document.createElement("th");       
         novaLinhaIndice.appendChild(novoIndiceTopo);
+
         for (var indice = 0; indice < 8; indice++) {
             
             var novaLinha = document.createElement("tr");
@@ -80,6 +87,11 @@
         }
         indicesTab.appendChild(novaLinhaIndice);
         // ----------------------------------------------------------------
+        // Ouvintes de eventos
+        // ----------------------------------------------------------------
+        btnFinalizar.addEventListener("click",finalizaJogo);
+        btnResetar.addEventListener("click",resetaJogo);
+        // ----------------------------------------------------------------
         // funções
         // ----------------------------------------------------------------
         function movimentoJogo(event)
@@ -89,11 +101,11 @@
             var indexColunaAtual = quadradoAtual.cellIndex;
             var indexLinhaAtual = quadradoAtual.parentElement.sectionRowIndex;
 
-            if(inicio==0)
+            if(movimento==0)
             {
                 quadradoAtual.appendChild(cavalo);
                 coloreVerde(indexColunaAtual,indexLinhaAtual);
-                inicio++;
+                movimento++;
             }
             else
             {
@@ -168,6 +180,32 @@
                     else
                     {
                         corpoTabela.children[indice].children[indice2].style.backgroundColor ="burlywood";
+                    }
+                }
+            }
+        }
+        function finalizaJogo()
+        {
+
+        }
+        function resetaJogo()
+        {
+            var corpoTabela = document.getElementById("corpTabuleiro");
+            //reseta a cor do backgroud, movimento e remove filhos
+            movimento=0;
+            for (var indice = 0; indice < 8; indice++) {
+
+                for (var indice2 = 1; indice2 < 9; indice2++) {
+
+                    if((indice+indice2)%2==0)
+                    {
+                        corpoTabela.children[indice].children[indice2].style.backgroundColor ="antiquewhite";
+                        corpoTabela.children[indice].children[indice2].innerHTML = "";
+                    }
+                    else
+                    {
+                        corpoTabela.children[indice].children[indice2].style.backgroundColor ="burlywood";
+                        corpoTabela.children[indice].children[indice2].innerHTML = "";
                     }
                 }
             }

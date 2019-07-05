@@ -217,23 +217,25 @@
         {
             if(indexLinhaAtual >0)
             {
-                finalizar(indexLinhaAtual,indexColunaAtual);
+                finalizar();
             }
         }
-        function finalizar(indiceLinhaAtual, incideColunaAtual)
+        function finalizar()
         {
             //acessa os quadrados da próxima jogada e escolhe o menos acessível
             var corpoTabela = document.getElementById("corpTabuleiro");
             var modificadorCoord1 = 1;
+            var menorAcessibilidade =100;
+            var proxJogada = null;
             for (var index = 0; index < 2; index++)
             {
                 var modificadorCoord2 = 1;
                 for (var index2 = 0; index2 < 2; index2++) {
-                    var novoIndexLinha1 = indiceLinhaAtual + (2*modificadorCoord1);
-                    var novoIndexColuna1 = incideColunaAtual + (1*modificadorCoord2);
+                    var novoIndexLinha1 = indexLinhaAtual + (2*modificadorCoord1);
+                    var novoIndexColuna1 = indexColunaAtual + (1*modificadorCoord2);
 
-                    var novoIndexLinha2 = indiceLinhaAtual + (1*modificadorCoord2);
-                    var novoIndexColuna2 = incideColunaAtual + (2*modificadorCoord1);
+                    var novoIndexLinha2 = indexLinhaAtual + (1*modificadorCoord2);
+                    var novoIndexColuna2 = indexColunaAtual + (2*modificadorCoord1);
 
                     if((novoIndexLinha1 >= 0) && (novoIndexLinha1 < 8))
                     {
@@ -242,7 +244,12 @@
                             var proxQuadrado = corpoTabela.children[novoIndexLinha1].children[novoIndexColuna1];
                             if(proxQuadrado.style.backgroundColor == "green")
                             {
-                                acessibilidade(novoIndexLinha1,novoIndexColuna1);
+                                var novaAcessibilidade = acessibilidade(novoIndexLinha1,novoIndexColuna1);
+                                if(novaAcessibilidade<menorAcessibilidade)
+                                {
+                                    menorAcessibilidade= novaAcessibilidade;
+                                    proxJogada = proxQuadrado;
+                                }
                             }
                         }
                     }
@@ -253,13 +260,38 @@
                             var proxQuadrado = corpoTabela.children[novoIndexLinha2].children[novoIndexColuna2];
                             if(proxQuadrado.style.backgroundColor == "green")
                             {
-                                acessibilidade(novoIndexLinha2,novoIndexColuna2);
+                                var novaAcessibilidade = acessibilidade(novoIndexLinha2,novoIndexColuna2);
+                                if(novaAcessibilidade<menorAcessibilidade)
+                                {
+                                    menorAcessibilidade= novaAcessibilidade;
+                                    proxJogada = proxQuadrado;
+                                }
                             }
                         }
                     }
                     modificadorCoord2= modificadorCoord2 * (-1);
                 }
                 modificadorCoord1= modificadorCoord1 * (-1);
+            }
+            if(proxJogada!=null)
+            {
+                var quadradoAnterior = cavalo.parentElement;
+                movimento++;
+
+                resetaCor();
+
+                var fechado = document.createElement("img");
+                fechado.src = "fechado.png";
+                fechado.classList = "quadradoInterno";
+
+                quadradoAnterior.appendChild(fechado);
+                proxJogada.innerText = movimento;
+                proxJogada.appendChild(cavalo);
+
+                indexColunaAtual = proxJogada.cellIndex;
+                indexLinhaAtual = proxJogada.parentElement.sectionRowIndex;
+                coloreVerde();
+                finalizar();
             }
         }
         function acessibilidade(indiceLinhaAtual, incideColunaAtual)
